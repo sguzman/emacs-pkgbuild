@@ -8,7 +8,7 @@ pkgdesc="The extensible, customizable, self-documenting real-time display editor
 arch=('x86_64')
 url="https://www.gnu.org/software/emacs/emacs.html"
 license=('GPL3')
-depends=('librsvg' 'gpm' 'giflib' 'libxpm' 'libotf' 'm17n-lib' 'gtk3' 'hicolor-icon-theme' 'desktop-file-utils' 'alsa-lib' 'gnutls' 'jansson' 'cairo' 'harfbuzz')
+depends=('librsvg' 'gpm' 'giflib' 'libxpm' 'libotf' 'm17n-lib' 'gtk3' 'hicolor-icon-theme' 'desktop-file-utils' 'alsa-lib' 'gnutls' 'jansson' 'cairo' 'harfbuzz' 'libgccjit')
 validpgpkeys=('E6C9029C363AD41D787A8EBB91C1262F01EB8D39' '28D3BED851FDF3AB57FEF93C233587A47C207910')
 source=(https://ftp.gnu.org/gnu/emacs/$pkgname-$pkgver.tar.xz{,.sig})
 sha1sums=('8d18e2bfb6e28cf060ce7587290954e9c582aa25'
@@ -18,8 +18,8 @@ build() {
   cd "$srcdir"/$pkgname-$pkgver
   ac_cv_lib_gif_EGifPutExtensionLast=yes ./configure --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib \
                                     --localstatedir=/var --with-x-toolkit=gtk3 --with-xft --with-wide-int \
-                                    --with-modules --with-cairo --with-harfbuzz
-  make
+                                    --with-modules --with-cairo --with-harfbuzz --with-native-compilation
+  make NATIVE_FULL_AOT=1
 }
 
 package() {
